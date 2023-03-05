@@ -1,0 +1,21 @@
+{
+  "globals": {
+    "ga": true,
+    "chrome": true
+  },
+  "plugins": ["html", "json"],
+  "extends": "elemefe",
+  "rules": {
+    "no-restricted-globals": ["error", "event", "fdescribe"],
+    "semi": [0, "never"],
+    "comma-dangle": [0, "never"],
+    "no-multi-spaces": 0,
+    "spaced-comment": 0
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}
