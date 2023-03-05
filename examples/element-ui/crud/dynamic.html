@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="no-js">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.staticfile.org/axios/0.19.0-beta.1/axios.js"></script>
+  <script src="https://cdn.staticfile.org/vue/2.5.17/vue.js"></script>
+  <link rel="stylesheet" href="../../cdn/element-ui/theme-chalk/index.css" />
+  <script src="../../cdn/element-ui/index.js"></script>
+
+  <script src="https://cdn.staticfile.org/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+  <script src="https://cdn.staticfile.org/xlsx/0.18.2/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="../../../lib/index.css" />
+  <script src="../../../lib/avue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <avue-crud :option="option" :data="data">
+      <div slot-scope="scope" slot="inputForm">
+        <el-tag>{{scope.row}}</el-tag>
+      </div>
+    </avue-crud>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        dicData: [],
+        data: [{
+          input: 1,
+          tree: 1,
+          dic: "110000",
+          dynamic: [{
+            input: 1,
+            select: 1,
+            radio: 1,
+          }, {
+            input: 2,
+            select: 2,
+            radio: 2,
+          }]
+        }, {
+          input: 2,
+          tree: 2,
+          dic: "120000",
+          dynamic: [{
+            input: 1,
+            select: 1,
+            radio: 1,
+          }, {
+            input: 2,
+            select: 2,
+            radio: 2,
+          }]
+        }],
+      }
+    },
+    computed: {
+      option() {
+        let callback = (value) => {
+          if (value == 0) {
+            this.dicData = [{
+              label: 0,
+              value: 0
+            }]
+          } else {
+            this.dicData = [{
+              label: 1,
+              value: 1
+            }]
+          }
+        }
+        return {
+          labelWidth: 110,
+          excelBtn: true,
+          column: [{
+            label: '网络字典',
+            prop: 'dic',
+            type: 'select',
+            props: {
+              label: 'name',
+              value: 'code'
+            },
+            dicUrl: 'https://cli.avuejs.com/api/area/getProvince',
+          }, {
+            label: '树型',
+            prop: "tree",
+            type: 'select',
+            change: ({ value }) => {
+              callback(value);
+            },
+            dicData: [{
+              label: '1-1',
+              value: 0,
+            }, {
+              label: "2-1",
+              value: 1
+            }]
+          },
+          {
+            label: '子表单',
+            prop: 'dynamic',
+            type: 'dynamic',
+            span: 16,
+            span: 24,
+            children: {
+              height: 300,
+              align: 'center',
+              headerAlign: 'center',
+              column: [{
+                label: '输入框',
+                prop: "input",
+                rules: [
+                  {
+                    required: true,
+                    message: '必填项测试',
+                    trigger: 'blur'
+                  }
+                ]
+              }]
+            },
+          },
+          ]
+        }
+      }
+    }
+  })
+</script>
+
+</html>
