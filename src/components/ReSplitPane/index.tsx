@@ -68,6 +68,7 @@ export default defineComponent({
       if (active.value) {
         let offset = 0;
         let target = e.currentTarget;
+        // 递归累加，获取切割面板距离屏幕左侧的距离
         if (props.splitSet?.split === "vertical") {
           while (target) {
             offset += target.offsetLeft;
